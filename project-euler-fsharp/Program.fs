@@ -66,10 +66,18 @@ let problem5 () =
         | n -> gcd b n
 
     divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| gcd cur next) 1L
-    
+
+let problem6a () =
+    (seq { 1 .. 100 } |> Seq.sum |> pown) 2 |> (-) <| (seq { 1 .. 100 } |> Seq.map (fun i -> pown i 2) |> Seq.sum)
+
+let problem6b () =
+    let n = 100
+
+    (pown (n * (n + 1) / 2) 2) - (2 * n + 1) * (n + 1) * n / 6
+
 [<EntryPoint>]
 let main argv = 
-    problem5() |> printfn "%d"
+    problem6b() |> printfn "%d"
 
     Console.ReadKey(true) |> ignore
     0
