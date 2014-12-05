@@ -12,10 +12,9 @@ let problem2 () =
 
         if newFib % 2 = 0 then runningTotal := !runningTotal + newFib
 
-        if newFib > 4000000 then
-            runningTotal
-        else
-            fibEvenSum sndFib newFib runningTotal
+        match newFib with
+        | x when x > 4000000 -> runningTotal
+        | _ -> fibEvenSum sndFib newFib runningTotal
 
     ref 0 |> fibEvenSum 1 1 |> (!)
 
@@ -30,10 +29,9 @@ let problem3a () =
     let input = 600851475143L
     let factorsOfInput = factorsOf input
 
-    if factorsOfInput |> Seq.length = 0 then
-        input
-    else
-        factorsOfInput |> Seq.filter isPrime |> Seq.max
+    match factorsOfInput |> Seq.length with
+    | 0 -> input
+    | _ -> factorsOfInput |> Seq.filter isPrime |> Seq.max 
 
 let problem3b () =
     let input = 600851475143L
@@ -43,17 +41,25 @@ let problem3b () =
     let mutable largestFactor = 1L
 
     while (n <= roof) do
-        if roof % n = 0L then
-            roof <- roof / n
-            largestFactor <- n
-        else
-            n <- n + 1L
+        match roof % n with
+        | 0L -> roof <- roof / n; largestFactor <- n
+        | _ -> n <- n + 1L 
 
     largestFactor
 
+let problem4 () =
+    let isPalindrome tuple =
+        let str = fst tuple * snd tuple |> string
+        str = new string(Seq.toArray str |> Array.rev)
+
+    seq { for i in 999 .. -1 .. 100 do for j in 999 .. -1 .. 100 do yield i, j } 
+    |> Seq.filter isPalindrome
+    |> Seq.map (fun (i, j) -> i * j)
+    |> Seq.max
+
 [<EntryPoint>]
 let main argv = 
-    problem3b () |> printfn "%d"
+    problem4() |> printfn "%d"
 
     Console.ReadKey(true) |> ignore
     0
