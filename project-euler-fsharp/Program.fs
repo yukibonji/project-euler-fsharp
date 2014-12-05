@@ -52,7 +52,7 @@ let problem4 () =
         let str = fst tuple * snd tuple |> string
         str = new string(Seq.toArray str |> Array.rev)
 
-    seq { for i in 999 .. -1 .. 100 do for j in 999 .. -1 .. 100 do yield i, j } 
+    seq { for i in 100 .. 999 do for j in 100 .. i do yield i, j } 
     |> Seq.filter isPalindrome
     |> Seq.map (fun (i, j) -> i * j)
     |> Seq.max
