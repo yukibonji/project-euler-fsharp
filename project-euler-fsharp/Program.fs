@@ -1,4 +1,6 @@
-﻿open System
+﻿module Program
+
+open System
 
 let problem1a () =
     seq { for n in 1 .. 999 do if n % 3 = 0 || n % 5 = 0 then yield n } |> Seq.sum
@@ -19,19 +21,12 @@ let problem2 () =
     ref 0 |> fibEvenSum 1 1 |> (!)
 
 let problem3a () =
-    let factorsOf (n: int64) =
-       let root = n |> float |> sqrt |> int64
-       seq { for x in 2L .. root do if n % x = 0L then yield x }
-
-    let isPrime n =
-        factorsOf n |> Seq.length = 0
-
     let input = 600851475143L
-    let factorsOfInput = factorsOf input
+    let factorsOfInput = Common.factorsOf input
 
     match factorsOfInput |> Seq.length with
     | 0 -> input
-    | _ -> factorsOfInput |> Seq.filter isPrime |> Seq.max 
+    | _ -> factorsOfInput |> Seq.filter Common.isPrime |> Seq.max 
 
 let problem3b () =
     let input = 600851475143L
@@ -60,24 +55,17 @@ let problem4 () =
 let problem5 () =
     let divisors = [ 2L; 3L; 4L; 5L; 6L; 7L; 8L; 9L; 11L; 13L; 16L; 17L; 19L ]
 
-    let rec gcd a b =
-        match a % b with
-        | 0L -> b
-        | n -> gcd b n
-
-    divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| gcd cur next) 1L
+    divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| Common.gcd cur next) 1L
 
 let problem6a () =
     (seq { 1 .. 100 } |> Seq.sum |> pown) 2 |> (-) <| (seq { 1 .. 100 } |> Seq.map (fun i -> pown i 2) |> Seq.sum)
 
 let problem6b () =
     let n = 100
-
     (pown (n * (n + 1) / 2) 2) - (2 * n + 1) * (n + 1) * n / 6
 
 [<EntryPoint>]
 let main argv = 
-    problem6b() |> printfn "%d"
-
+    problem3a() |> printfn "%d"
     Console.ReadKey(true) |> ignore
     0
