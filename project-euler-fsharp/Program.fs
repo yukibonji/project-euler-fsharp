@@ -108,8 +108,18 @@ let problem8 () =
                   0L
     |> Array.max
 
+let problem9 () =
+    let isPythTriplet tuple =
+        let third = 1000 - fst tuple - snd tuple
+        fst tuple * fst tuple + snd tuple * snd tuple = third * third
+
+    seq { for i in 1 .. 333 do
+            for j in 333 .. 500 do
+              yield i, j }
+    |> Seq.pick (fun (i, j) -> if isPythTriplet (i, j) then Some(i * j * (1000 - i - j)) else None)
+
 [<EntryPoint>]
 let main argv = 
-    problem8() |> printfn "%d"
+    problem9() |> printfn "%d"
     Console.ReadKey(true) |> ignore
     0
