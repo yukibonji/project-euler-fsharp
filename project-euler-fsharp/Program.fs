@@ -64,8 +64,14 @@ let problem6b () =
     let n = 100
     (pown (n * (n + 1) / 2) 2) - (2 * n + 1) * (n + 1) * n / 6
 
+let problem7 () =
+    Seq.initInfinite (fun i -> int64 i |> (*) 2L |> (+) 1L) 
+    |> Seq.filter Common.isPrime
+    |> Seq.skip 10000
+    |> Seq.head
+
 [<EntryPoint>]
 let main argv = 
-    problem3a() |> printfn "%d"
+    problem7() |> printfn "%d"
     Console.ReadKey(true) |> ignore
     0
