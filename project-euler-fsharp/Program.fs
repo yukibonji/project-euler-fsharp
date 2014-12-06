@@ -71,7 +71,7 @@ let problem7 () =
     |> Seq.nth 10000
 
 let problem8 () =
-    let numberArrays = "73167176531330624919225119674426574742355349194934
+    let input = "73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
 85861560789112949495459501737958331952853208805511
 12540698747158523863050715693290963295227443043557
@@ -90,16 +90,20 @@ let problem8 () =
 07198403850962455444362981230987879927244284909188
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
-71636269561882670428252483600823257530420752963450".Replace(Environment.NewLine, "").Split([| '0' |], StringSplitOptions.RemoveEmptyEntries)
-                                                   .Where(fun inner -> String.length inner > 12).ToArray()
-                                                   |> Array.map (fun inner -> inner.ToCharArray() |> Array.map (fun i -> int64 i - 48L))
+71636269561882670428252483600823257530420752963450"
+
+    let numberArrays = input.Replace(Environment.NewLine, "")
+                            .Split([| '0' |], StringSplitOptions.RemoveEmptyEntries)
+                            .Where(fun inner -> String.length inner > 12)
+                            .ToArray()
+                            |> Array.map (fun inner -> inner.ToCharArray() |> Array.map (fun i -> int64 i - 48L))
     
     let productFromIndexes (array: int64 []) indexes =
         indexes |> List.fold (fun state i -> array.[i] * state) 1L
 
     numberArrays
     |> Array.scan (fun _ i -> seq { 13 .. Array.length i - 1 }
-                              |> Seq.scan (fun stateInner j -> stateInner / i.[j - 13] * i.[j]) (productFromIndexes i [ 0 .. 12 ])
+                              |> Seq.scan (fun state j -> state / i.[j - 13] * i.[j]) (productFromIndexes i [ 0 .. 12 ])
                               |> Seq.max)
                   0L
     |> Array.max
