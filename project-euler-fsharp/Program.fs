@@ -118,8 +118,22 @@ let problem9 () =
               yield i, j }
     |> Seq.pick (fun (i, j) -> if isPythTriplet (i, j) then Some(i * j * (1000 - i - j)) else None)
 
+let problem10a () =
+    seq { 3L .. 2L .. 1999999L }
+    |> Seq.fold (fun state i -> if Common.isPrime i then i :: state else state) [ 2L ]
+    |> List.sum
+
+let problem10b () =
+    let root = float 1999999 |> sqrt |> int64
+    let mutable sieve = [ 3L .. 2L .. 1999999L ]
+
+    for i in 3L .. root do
+        sieve <- List.filter (fun x -> x = i || x % i <> 0L) sieve
+    
+    List.sum sieve + 2L
+
 [<EntryPoint>]
 let main argv = 
-    problem9() |> printfn "%d"
+    problem10a() |> printfn "%d"
     Console.ReadKey(true) |> ignore
     0
