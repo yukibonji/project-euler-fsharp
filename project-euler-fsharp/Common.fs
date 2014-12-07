@@ -13,3 +13,6 @@ let rec gcd a b =
     match a % b with
     | 0L -> b
     | n -> gcd b n
+
+let (|Even|Odd|) i = 
+    if i % 2L = 0L then Even else Odd

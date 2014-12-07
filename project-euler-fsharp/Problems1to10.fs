@@ -2,6 +2,7 @@
 
 open System
 open System.Linq
+open Common
 
 let problem1a () =
     seq { for n in 1 .. 999 do if n % 3 = 0 || n % 5 = 0 then yield n } |> Seq.sum
@@ -23,11 +24,11 @@ let problem2 () =
 
 let problem3a () =
     let input = 600851475143L
-    let factorsOfInput = Common.factorsOf input
+    let factorsOfInput = factorsOf input
 
     match factorsOfInput |> Seq.isEmpty with
     | true -> input
-    | _ -> factorsOfInput |> Seq.filter Common.isPrime |> Seq.max 
+    | _ -> factorsOfInput |> Seq.filter isPrime |> Seq.max 
 
 let problem3b () =
     let input = 600851475143L
@@ -37,9 +38,9 @@ let problem3b () =
     let mutable largestFactor = 1L
 
     while (n <= roof) do
-        match roof % n with
-        | 0L -> roof <- roof / n; largestFactor <- n
-        | _ -> n <- n + 1L 
+        match roof with
+        | Even -> roof <- roof / n; largestFactor <- n
+        | Odd -> n <- n + 1L 
 
     largestFactor
 
@@ -56,7 +57,7 @@ let problem4 () =
 let problem5 () =
     let divisors = [ 2L; 3L; 4L; 5L; 6L; 7L; 8L; 9L; 11L; 13L; 16L; 17L; 19L ]
 
-    divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| Common.gcd cur next) 1L
+    divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| gcd cur next) 1L
 
 let problem6a () =
     (seq { 1 .. 100 } |> Seq.sum |> pown) 2 |> (-) <| (seq { 1 .. 100 } |> Seq.map (fun i -> pown i 2) |> Seq.sum)
@@ -67,7 +68,7 @@ let problem6b () =
 
 let problem7 () =
     Seq.initInfinite (fun i -> int64 i |> (*) 2L |> (+) 1L)
-    |> Seq.filter Common.isPrime
+    |> Seq.filter isPrime
     |> Seq.nth 10000
 
 let problem8 () =
@@ -119,7 +120,7 @@ let problem9 () =
 
 let problem10a () =
     seq { 3L .. 2L .. 1999999L }
-    |> Seq.fold (fun state i -> if Common.isPrime i then i :: state else state) [ 2L ]
+    |> Seq.fold (fun state i -> if isPrime i then i :: state else state) [ 2L ]
     |> List.sum
 
 let problem10b () =

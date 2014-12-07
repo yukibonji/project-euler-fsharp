@@ -1,6 +1,7 @@
 ﻿module Problems11to20
 
 open System
+open Common
 
 let problem11 () =
     let input = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -44,7 +45,7 @@ let problem11 () =
 let problem12 () =
     Seq.initInfinite id
     |> Seq.scan (+) 0
-    |> Seq.pick (fun i -> if int64 i |> Common.factorsOf |> Seq.length > 498 then Some(i) else None)
+    |> Seq.pick (fun i -> if int64 i |> factorsOf |> Seq.length > 498 then Some(i) else None)
 
 let problem13 () =
     let input = "37107287533902102798797998220837590246510135740250 46376937677490009712648124896970078050417018260538 74324986199524741059474233309513058123726617309629
@@ -96,8 +97,8 @@ let problem14a () =
 
         while curr <> 1L do
             match curr with
-            | x when x % 2L = 0L -> curr <- curr / 2L
-            | _ -> curr <- 3L * curr + 1L
+            | Even -> curr <- curr / 2L
+            | Odd -> curr <- 3L * curr + 1L
             l <- l + 1
 
         if l > fst longest then longest <- l, i
