@@ -117,3 +117,7 @@ let problem14b () =
 
     seq { 2L .. 999999L }
     |> Seq.maxBy collatzLength
+
+let problem15 () =
+    seq { 1L .. 20L }
+    |> Seq.fold (fun state i -> state * (41L - i) / i) 1L
