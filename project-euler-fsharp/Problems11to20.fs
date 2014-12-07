@@ -86,3 +86,33 @@ let problem13 () =
                              |> Array.map (fun str -> str.Substring(0, 11) |> Int64.Parse)
 
     (significantNumbers |> Array.sum |> string).Substring(0, 10) |> Int64.Parse
+
+let problem14a () =
+    let mutable longest = 1, 0L
+
+    for i in 2L .. 1000000L do
+        let mutable l = 1
+        let mutable curr = i
+
+        while curr <> 1L do
+            match curr with
+            | x when x % 2L = 0L -> curr <- curr / 2L
+            | _ -> curr <- 3L * curr + 1L
+            l <- l + 1
+
+        if l > fst longest then longest <- l, i
+
+    snd longest
+
+let problem14b () =
+    let collatzLength n =
+        let rec tailCollatzLength n acc =
+            match n with
+            | 1L -> acc
+            | x when x % 2L = 0L -> tailCollatzLength (n / 2L) (acc + 1)
+            | _ -> tailCollatzLength (3L * n + 1L) (acc + 1)
+
+        tailCollatzLength n 1
+
+    seq { 2L .. 999999L }
+    |> Seq.maxBy collatzLength

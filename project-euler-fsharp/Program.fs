@@ -15,7 +15,7 @@ let time f =
 
 [<EntryPoint>]
 let main argv = 
-    let i, j = time Problems11to20.problem13
+    let i, j = time Problems11to20.problem14b
     printfn "%d, %dms" i <| int j
     Console.ReadKey(true) |> ignore
     0
