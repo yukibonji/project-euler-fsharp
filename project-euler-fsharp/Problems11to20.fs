@@ -121,3 +121,6 @@ let problem14b () =
 let problem15 () =
     seq { 1L .. 20L }
     |> Seq.fold (fun state i -> state * (41L - i) / i) 1L
+
+let problem16 () =
+    2I ** 1000 |> string |> Seq.map (fun i -> int i - 48) |> Seq.sum
