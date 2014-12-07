@@ -25,8 +25,8 @@ let problem3a () =
     let input = 600851475143L
     let factorsOfInput = Common.factorsOf input
 
-    match factorsOfInput |> Seq.length with
-    | 0 -> input
+    match factorsOfInput |> Seq.isEmpty with
+    | true -> input
     | _ -> factorsOfInput |> Seq.filter Common.isPrime |> Seq.max 
 
 let problem3b () =

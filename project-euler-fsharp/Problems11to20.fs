@@ -40,3 +40,8 @@ let problem11 () =
     
     seq { for i in 0 .. 19 do for j in 0 .. 19 do if inputMatrix.[i].[j] <> 0 then yield maxProductFromIndex inputMatrix i j }
     |> Seq.max
+
+let problem12 () =
+    Seq.initInfinite id
+    |> Seq.scan (+) 0
+    |> Seq.pick (fun i -> if int64 i |> Common.factorsOf |> Seq.length > 498 then Some(i) else None)
