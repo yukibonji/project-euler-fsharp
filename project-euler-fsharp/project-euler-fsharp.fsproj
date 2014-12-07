@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Common.fs" />
     <Compile Include="Problems1to10.fs" />
+    <Compile Include="Problems11to20.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
   </ItemGroup>

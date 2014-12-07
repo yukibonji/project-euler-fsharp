@@ -102,10 +102,9 @@ let problem8 () =
         indexes |> List.fold (fun state i -> array.[i] * state) 1L
 
     numberArrays
-    |> Array.scan (fun _ i -> seq { 13 .. Array.length i - 1 }
-                              |> Seq.scan (fun state j -> state / i.[j - 13] * i.[j]) (productFromIndexes i [ 0 .. 12 ])
-                              |> Seq.max)
-                  0L
+    |> Array.map (fun i -> seq { 13 .. Array.length i - 1 }
+                           |> Seq.scan (fun state j -> state / i.[j - 13] * i.[j]) (productFromIndexes i [ 0 .. 12 ])
+                           |> Seq.max)
     |> Array.max
 
 let problem9 () =

@@ -1,9 +1,21 @@
 ﻿module Program
 
 open System
+open System.Diagnostics
+
+let time f =
+    let sw = new Stopwatch()
+    sw.Start()
+
+    let result = f ()
+
+    sw.Stop()
+
+    result, sw.ElapsedMilliseconds
 
 [<EntryPoint>]
 let main argv = 
-    Problems1to10.problem10b () |> printfn "%d"
+    let i, j = time Problems11to20.problem11
+    printfn "%d, %dms" i <| int j
     Console.ReadKey(true) |> ignore
     0
