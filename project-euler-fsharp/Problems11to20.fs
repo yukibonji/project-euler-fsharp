@@ -102,3 +102,38 @@ let problem18 () =
                           |> Seq.iter (fun j -> inputTree.[i].[j] <- inputTree.[i].[j] + max inputTree.[i + 1].[j] inputTree.[i + 1].[j + 1]))
 
     inputTree.[0].[0]
+
+type Day = Sunday = 0 | Monday = 1 | Tuesday = 2 | Wednesday = 3 | Thursday = 4 | Friday = 5 | Saturday = 6
+
+let problem19 () =
+    let isLeap n =
+        n % 4 = 0 && (n % 100 <> 0 || n % 400 = 0)
+
+    let daysInMonth month year =
+        match month with
+        | 1 -> 31
+        | 2 when isLeap year -> 29
+        | 2 -> 28
+        | 3 -> 31
+        | 4 -> 30
+        | 5 -> 31
+        | 6 -> 30
+        | 7 -> 31
+        | 8 -> 31
+        | 9 -> 30
+        | 10 -> 31
+        | 11 -> 30
+        | 12 -> 31
+        | _ -> failwith "ooops"
+
+    let today = enum<Day>(int Day.Monday + 365 |> (%) <| 7) |> ref
+
+    let advanceToday by =
+        let old = !today
+        today := enum<Day>(int !today + by |> (%) <| 7)
+        old
+
+    seq { 1901 .. 1904 }
+    |> Seq.sumBy (fun year -> seq { 1 .. 12 }
+                              |> Seq.filter (fun month -> daysInMonth month year |> advanceToday = Day.Sunday)
+                              |> Seq.length)

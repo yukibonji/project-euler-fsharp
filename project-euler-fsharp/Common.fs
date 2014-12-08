@@ -20,4 +20,4 @@ let (|Even|Odd|) i =
     if i % 2L = 0L then Even else Odd
 
 let readLines (problem: int) =
-    File.ReadAllLines(String.Format("..\..\data\{0}.txt", problem)).Where(String.IsNullOrWhiteSpace >> not)
+    File.ReadAllLines(String.Format("../../data/{0}.txt", problem)).Where(String.IsNullOrWhiteSpace >> not)
