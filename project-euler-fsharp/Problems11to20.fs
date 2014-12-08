@@ -1,6 +1,7 @@
 ﻿module Problems11to20
 
 open System
+open System.Collections.Generic
 open Common
 
 let problem11 () =
@@ -124,3 +125,22 @@ let problem15 () =
 
 let problem16 () =
     2I ** 1000 |> string |> Seq.map (fun i -> int i - 48) |> Seq.sum
+
+let problem17 () =
+    let numberLengths = new Dictionary<int, int>()
+
+    // 0 has a length of -3 to get rid of 'and' in, say, '300', which is parsed as 'three hundred and'
+    [| (0, -3); (1, 3); (2, 3); (3, 5); (4, 4); (5, 4); (6, 3); (7, 5); (8, 5); (9, 4); (10, 3); 
+    (11, 6); (12, 6); (13, 8); (14, 8); (15, 7); (16, 7); (17, 9); (18, 8); (19, 8); (20, 6);
+    (30, 6); (40, 5); (50, 5); (60, 5); (70, 7); (80, 6); (90, 6); (100, 7); (1000, 8) |]
+    |> Array.iter numberLengths.Add
+
+    let rec letterCount n =
+        match n with
+        | x when x < 21 -> numberLengths.[n]
+        | x when x < 100 -> numberLengths.[n / 10 * 10] + if n % 10 <> 0 then numberLengths.[n % 10] else 0
+        | x when x = 1000 -> numberLengths.[1000] + numberLengths.[1]
+        | _ -> letterCount (n % 100) + numberLengths.[100] + 3 + numberLengths.[n / 100]
+
+    seq { 1 .. 1000 }
+    |> Seq.sumBy letterCount

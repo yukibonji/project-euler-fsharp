@@ -60,7 +60,7 @@ let problem5 () =
     divisors |> Seq.fold (fun cur next -> (*) cur next |> (/) <| gcd cur next) 1L
 
 let problem6a () =
-    (seq { 1 .. 100 } |> Seq.sum |> pown) 2 |> (-) <| (seq { 1 .. 100 } |> Seq.map (fun i -> pown i 2) |> Seq.sum)
+    (seq { 1 .. 100 } |> Seq.sum |> pown) 2 |> (-) <| (seq { 1 .. 100 } |> Seq.sumBy (fun i -> pown i 2))
 
 let problem6b () =
     let n = 100

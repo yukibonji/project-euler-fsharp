@@ -11,11 +11,11 @@ let time f =
 
     sw.Stop()
 
-    result, sw.ElapsedMilliseconds
+    result, sw.ElapsedTicks |> float |> (/) <| float TimeSpan.TicksPerMillisecond
 
 [<EntryPoint>]
 let main argv = 
-    let i, j = time Problems11to20.problem16
-    printfn "%d, %dms" i <| int j
+    let i, j = time Problems11to20.problem17
+    printfn "%d, %.3fms" i <| j
     Console.ReadKey(true) |> ignore
     0
