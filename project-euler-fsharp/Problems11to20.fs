@@ -124,15 +124,15 @@ let problem15 () =
     |> Seq.fold (fun state i -> state * (41L - i) / i) 1L
 
 let problem16 () =
-    2I ** 1000 |> string |> Seq.map (fun i -> int i - 48) |> Seq.sum
+    2I ** 1000 |> string |> Seq.sumBy (fun i -> int i - 48)
 
 let problem17 () =
     let numberLengths = new Dictionary<int, int>()
 
     // 0 has a length of -3 to get rid of 'and' in, say, '300', which is parsed as 'three hundred and'
     [| (0, -3); (1, 3); (2, 3); (3, 5); (4, 4); (5, 4); (6, 3); (7, 5); (8, 5); (9, 4); (10, 3); 
-    (11, 6); (12, 6); (13, 8); (14, 8); (15, 7); (16, 7); (17, 9); (18, 8); (19, 8); (20, 6);
-    (30, 6); (40, 5); (50, 5); (60, 5); (70, 7); (80, 6); (90, 6); (100, 7); (1000, 8) |]
+       (11, 6); (12, 6); (13, 8); (14, 8); (15, 7); (16, 7); (17, 9); (18, 8); (19, 8); (20, 6);
+       (30, 6); (40, 5); (50, 5); (60, 5); (70, 7); (80, 6); (90, 6); (100, 7); (1000, 8) |]
     |> Array.iter numberLengths.Add
 
     let rec letterCount n =
@@ -144,3 +144,30 @@ let problem17 () =
 
     seq { 1 .. 1000 }
     |> Seq.sumBy letterCount
+
+let problem18 () =
+    let input = "75
+ 95 64
+ 17 47 82
+ 18 35 87 10
+ 20 04 82 47 65
+ 19 01 23 75 03 34
+ 88 02 77 73 07 63 67
+ 99 65 04 28 06 16 70 92
+ 41 41 26 56 83 40 80 70 33
+ 41 48 72 33 47 32 37 16 94 29
+ 53 71 44 65 25 43 91 52 97 51 14
+ 70 11 33 28 77 73 17 78 39 68 17 57
+ 91 71 52 38 17 14 91 43 58 50 27 29 48
+ 63 66 04 68 89 53 67 30 73 16 69 87 40 31
+ 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"
+
+    let inputTree = input.Split([| Environment.NewLine |], StringSplitOptions.RemoveEmptyEntries)
+                    |> Array.map (fun line -> line.Split([| ' ' |], StringSplitOptions.RemoveEmptyEntries) |> Array.map Int32.Parse)
+    let treeDepth = Array.length inputTree
+
+    seq { treeDepth - 2 .. -1 .. 0 }
+    |> Seq.iter (fun i -> seq { 0 .. i }
+                          |> Seq.iter (fun j -> inputTree.[i].[j] <- inputTree.[i].[j] + max inputTree.[i + 1].[j] inputTree.[i + 1].[j + 1]))
+
+    inputTree.[0].[0]
