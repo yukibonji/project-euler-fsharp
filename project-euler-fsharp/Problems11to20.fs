@@ -137,3 +137,9 @@ let problem19 () =
     |> Seq.sumBy (fun year -> seq { 1 .. 12 }
                               |> Seq.filter (fun month -> daysInMonth month year |> advanceToday = Day.Sunday)
                               |> Seq.length)
+
+let problem20 () =
+    seq { 2I .. 100I }
+    |> Seq.fold (fun state i -> i * state) 1I
+    |> string
+    |> Seq.sumBy (fun i -> int i - 48)
