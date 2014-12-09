@@ -75,7 +75,7 @@ let problem8 () =
     let numberArrays = String.Join("", readLines 8).Split([| '0' |], StringSplitOptions.RemoveEmptyEntries)
                                                    .Where(fun inner -> String.length inner > 12)
                                                    .ToArray()
-                                                   |> Array.map (fun inner -> inner.ToCharArray() |> Array.map (fun i -> int64 i - 48L))
+                                                   |> Array.map (fun inner -> inner.ToCharArray() |> Array.map (charNumberToInt >> int64))
     
     let productFromIndexes (array: int64 []) indexes =
         indexes |> List.fold (fun state i -> array.[i] * state) 1L

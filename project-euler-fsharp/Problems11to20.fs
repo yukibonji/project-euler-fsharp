@@ -140,6 +140,6 @@ let problem19 () =
 
 let problem20 () =
     seq { 2I .. 100I }
-    |> Seq.fold (fun state i -> i * state) 1I
+    |> Seq.fold (*) 1I
     |> string
-    |> Seq.sumBy (fun i -> int i - 48)
+    |> Seq.sumBy charNumberToInt

@@ -50,6 +50,7 @@
     <Compile Include="Common.fs" />
     <Compile Include="Problems1to10.fs" />
     <Compile Include="Problems11to20.fs" />
+    <Compile Include="Problems21to30.fs" />
     <Compile Include="Problems61to70.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />

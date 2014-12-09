@@ -21,3 +21,6 @@ let (|Even|Odd|) i =
 
 let readLines (problem: int) =
     File.ReadAllLines(String.Format("../../data/{0}.txt", problem)).Where(String.IsNullOrWhiteSpace >> not)
+
+let charNumberToInt (c: char) =
+    int c - 48
