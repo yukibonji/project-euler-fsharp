@@ -11,11 +11,11 @@ let time f =
 
     sw.Stop()
 
-    result, sw.ElapsedTicks |> double |> (/) <| double Stopwatch.Frequency
+    result, sw.Elapsed.TotalMilliseconds
 
 [<EntryPoint>]
 let main argv = 
-    let i, j = time Problems21to30.problem22
+    let i, j = time Problems21to30.problem23
     printfn "%d, %.3fms" i <| j
     Console.ReadKey(true) |> ignore
     0
