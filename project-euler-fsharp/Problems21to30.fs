@@ -1,6 +1,7 @@
 ﻿module Problems21to30
 
 open System
+open System.Collections.Generic
 open Common
 
 let problem21 () =
@@ -27,20 +28,35 @@ let problem22 () =
     |> fst
 
 let problem23 () =
-    let abundantNumbers = seq { 1L .. 28123L }
-                          |> Seq.filter (fun i -> (factorsOf >> Seq.distinct >> Seq.sum >> (+) 1L) i > i)
+    let abundantNumbers = seq { 1 .. 28123 }
+                          |> Seq.filter (fun i -> (int64 >> factorsOf >> Seq.distinct >> Seq.sum >> int >> (+) 1) i > i)
                           |> Seq.toArray
-    let len = Array.length abundantNumbers 
     
     let sumFlags = Array.create 28124 false
     let limit = abundantNumbers
-                |> Array.pick (fun i -> if abundantNumbers.[int i] > 28123L / 2L then Some(int i) else None)
+                |> Array.pick (fun i -> if abundantNumbers.[int i] > 28123 / 2 then Some(i) else None)
 
     abundantNumbers.[ 0 .. limit ]
     |> Array.iter (fun i -> abundantNumbers
-                            |> Array.iter (fun j -> if i + j <= 28123L then sumFlags.[i + j |> int] <- true))
+                            |> Array.iter (fun j -> if i + j <= 28123 then sumFlags.[i + j] <- true))
 
     sumFlags
     |> Array.mapi (fun index v -> index, v)
     |> Array.filter (not << snd)
     |> Array.sumBy fst
+
+let problem24 () =
+    let curr = ref 999999
+    let left = new List<int>([0 .. 9])
+    let permutations = [ 1 .. 10 ] |> Seq.scan (*) 1 |> Seq.toArray
+
+    let takeNthAvailable n =
+        let res = left.[n]
+        left.Remove(res) |> ignore
+        res
+
+    seq { for i in 0 .. 9 do
+              yield !curr / permutations.[9 - i] |> takeNthAvailable |> (*) <| pown 10 (9 - i)
+              curr := !curr % permutations.[9 - i]
+    }
+    |> Seq.sumBy int64

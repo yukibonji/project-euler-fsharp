@@ -109,8 +109,8 @@ let problem19 () =
     let isLeap n =
         n % 4 = 0 && (n % 100 <> 0 || n % 400 = 0)
 
-    let daysInMonth month year =
-        match month with
+    let daysInMonth year =
+        function
         | 1 -> 31
         | 2 when isLeap year -> 29
         | 2 -> 28

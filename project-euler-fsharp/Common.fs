@@ -24,3 +24,8 @@ let readLines (problem: int) =
 
 let charNumberToInt (c: char) =
     int c - 48
+
+let swapIndexes i j (array: 'a []) =
+    let tmp = array.[i]
+    array.[i] <- array.[j]
+    array.[j] <- tmp
