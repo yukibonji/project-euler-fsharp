@@ -60,3 +60,12 @@ let problem24 () =
               curr := !curr % permutations.[9 - i]
     }
     |> Seq.sumBy int64
+
+let problem25 () =
+    let fibs = Seq.unfold (fun (prev, curr) -> Some(curr, (curr, (fst curr + fst prev, snd curr + 1)))) ((1I, 1), (1I, 2))
+    let limit = 10I ** 999
+
+    fibs
+    |> Seq.skipWhile (fun i -> fst i < limit)
+    |> Seq.head
+    |> snd
