@@ -69,3 +69,21 @@ let problem25 () =
     |> Seq.skipWhile (fun i -> fst i < limit)
     |> Seq.head
     |> snd
+
+let problem26 () =
+    let repeatingDigitLength n =
+        let rec divide remainder digits =
+            let rem = remainder * 10
+            match rem % n with
+            | 0 -> 0
+            | r -> let d = rem / n
+                   match digits |> List.tryFindIndex ((=) (rem, d)) with
+                   | Some(i) -> i + 1 
+                   | None -> divide r ((rem, d) :: digits)  
+
+        divide 1 []
+    
+    [| 1 .. 999 |]
+    |> Array.Parallel.mapi (fun i n -> repeatingDigitLength n, i)
+    |> Array.maxBy fst
+    |> (snd >> (+) 1)
