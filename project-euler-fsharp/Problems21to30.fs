@@ -87,3 +87,28 @@ let problem26 () =
     |> Array.Parallel.mapi (fun i n -> repeatingDigitLength n, i)
     |> Array.maxBy fst
     |> (snd >> (+) 1)
+
+let problem27 () =
+    let gen a b n =
+        n * n + a * n + b
+
+    let root = float >> sqrt >> int64
+
+    let gensPrime a b n =
+        let candidate = gen a b n
+
+        match candidate with
+        | x when x < 2L -> false
+        | x -> seq { 2L .. root x}
+               |> Seq.exists ((%) candidate >> (=) 0L)
+               |> not
+    
+    let generatedPrimes (a, b) =
+        Seq.initInfinite int64
+        |> Seq.takeWhile (gensPrime a b)
+        |> Seq.length
+
+    let a, b = seq { for a in -999L .. 2L .. 999L do for b in 2L .. 999L do yield a, b }
+               |> Seq.maxBy generatedPrimes
+
+    a * b
