@@ -112,3 +112,8 @@ let problem27 () =
                |> Seq.maxBy generatedPrimes
 
     a * b
+
+let problem28 () =
+    Seq.unfold (fun (sub, last) -> if last = 1 then None else Some(4 * (last - 3 * sub / 2), (sub - 2, last - 4 * sub))) (1000, 1001 * 1001)
+    |> Seq.sum
+    |> (+) 1
