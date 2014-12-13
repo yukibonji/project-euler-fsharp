@@ -29,3 +29,6 @@ let swapIndexes i j (array: 'a []) =
     let tmp = array.[i]
     array.[i] <- array.[j]
     array.[j] <- tmp
+
+let apply f (a, b) =
+    f a b

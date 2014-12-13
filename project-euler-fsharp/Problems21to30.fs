@@ -108,12 +108,17 @@ let problem27 () =
         |> Seq.takeWhile (gensPrime a b)
         |> Seq.length
 
-    let a, b = seq { for a in -999L .. 2L .. 999L do for b in 2L .. 999L do yield a, b }
-               |> Seq.maxBy generatedPrimes
-
-    a * b
+    seq { for a in -999L .. 2L .. 999L do for b in 2L .. 999L do yield a, b }
+    |> Seq.maxBy generatedPrimes
+    |> (apply (*))
 
 let problem28 () =
     Seq.unfold (fun (sub, last) -> if last = 1 then None else Some(4 * (last - 3 * sub / 2), (sub - 2, last - 4 * sub))) (1000, 1001 * 1001)
     |> Seq.sum
     |> (+) 1
+
+let problem29 () =
+    seq { for a in 2I .. 100I do for b in 2 .. 100 do yield a, b }
+    |> Seq.map (apply ( **))
+    |> Seq.distinct
+    |> Seq.length
