@@ -119,6 +119,17 @@ let problem28 () =
 
 let problem29 () =
     seq { for a in 2I .. 100I do for b in 2 .. 100 do yield a, b }
-    |> Seq.map (apply ( **))
+    |> Seq.map (apply ( ** ))
     |> Seq.distinct
     |> Seq.length
+
+let problem30 () =
+    let limit = 6 * pown 9 5
+
+    let sumOfDigits n =
+        string n
+        |> Seq.sumBy (fun c -> c |> charNumberToInt |> pown <| 5)
+
+    seq { 2 .. limit }
+    |> Seq.filter (fun n -> n = sumOfDigits n)
+    |> Seq.sum
