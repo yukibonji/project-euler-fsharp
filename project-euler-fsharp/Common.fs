@@ -3,6 +3,7 @@
 open System
 open System.IO
 open System.Linq
+open System.Collections.Generic
 
 let factorsOf (n: int64) =
        let root = n |> float |> sqrt |> int64
@@ -11,10 +12,12 @@ let factorsOf (n: int64) =
 let isPrime n =
     factorsOf n |> Seq.isEmpty
 
-let rec gcd a b =
-    match a % b with
-    | 0L -> b
-    | n -> gcd b n
+let inline gcd a b =
+    let rec innerGcd a b =
+        let n = a % b
+        if n = LanguagePrimitives.GenericZero then b else innerGcd b n
+
+    innerGcd a b
 
 let (|Even|Odd|) i = 
     if i % 2L = 0L then Even else Odd
@@ -32,3 +35,14 @@ let swapIndexes i j (array: 'a []) =
 
 let apply f (a, b) =
     f a b
+
+type Memoizer<'T when 'T: equality>() =
+    let cache = new Dictionary<'T, 'T>()
+
+    member this.Get n =
+        match cache.TryGetValue(n) with
+        | true, value -> Some(value)
+        | false, _ -> None
+
+    member this.Store key value =
+        cache.Add(key, value)
