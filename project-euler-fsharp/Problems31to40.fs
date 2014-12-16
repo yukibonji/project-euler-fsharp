@@ -35,3 +35,13 @@ let problem33 () =
                |> Seq.reduce (fun (n1, d1) (n2, d2) -> n1 * n2, d1 * d2)
 
     d / gcd n d
+
+let problem34 () =
+    let factorials = [ 1 .. 9 ] |> List.scan (*) 1 |> List.toArray
+
+    let isSumOfDigitFactorials n =
+        string n |> Seq.sumBy (fun i -> factorials.[i |> charNumberToInt]) = n
+
+    seq { 3 .. 7 * factorials.[9] }
+    |> Seq.filter isSumOfDigitFactorials
+    |> Seq.sum
