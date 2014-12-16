@@ -36,8 +36,8 @@ let swapIndexes i j (array: 'a []) =
 let apply f (a, b) =
     f a b
 
-type Memoizer<'T when 'T: equality>() =
-    let cache = new Dictionary<'T, 'T>()
+type Memoizer<'T, 'U when 'T: equality>() =
+    let cache = Dictionary<'T, 'U>()
 
     member this.Get n =
         match cache.TryGetValue(n) with
