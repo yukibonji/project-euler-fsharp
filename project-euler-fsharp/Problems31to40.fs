@@ -45,3 +45,25 @@ let problem34 () =
     seq { 3 .. 7 * factorials.[9] }
     |> Seq.filter isSumOfDigitFactorials
     |> Seq.sum
+
+let problem35 () =
+    let root = float 999999 |> sqrt |> int
+    let sieve = ref [ 3 .. 2 .. 999999 ]
+
+    for i in 3 .. root do
+        sieve := List.filter (fun x -> x = i || x % i <> 0) !sieve
+
+    let rotations (n: string) =
+        [ 0 .. Seq.length n - 1 ]
+        |> List.map (fun i -> sprintf "%s%s" n.[ i .. ] n.[ 0 .. i - 1 ] |> int)
+
+    let doesNotContainDigits (n: string) =
+        [ "0"; "2"; "4"; "6"; "8" ]
+        |> Seq.forall (fun i -> not <| n.Contains(i))
+
+    seq { 3 .. 2 .. 999999 }
+    |> Seq.map string
+    |> Seq.filter doesNotContainDigits
+    |> Seq.filter (rotations >> List.forall (fun i -> List.exists ((=) i) !sieve))
+    |> Seq.length
+    |> (+) 1

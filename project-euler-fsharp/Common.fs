@@ -19,7 +19,7 @@ let inline gcd a b =
 
     innerGcd a b
 
-let (|Even|Odd|) i = 
+let (|Even|Odd|) i =
     if i % 2L = 0L then Even else Odd
 
 let readLines (problem: int) =
