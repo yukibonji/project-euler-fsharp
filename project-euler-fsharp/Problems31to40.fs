@@ -67,3 +67,13 @@ let problem35 () =
     |> Seq.filter (rotations >> List.forall (fun i -> List.exists ((=) i) !sieve))
     |> Seq.length
     |> (+) 1
+
+let problem36 () =
+    let isPalindrome n =
+        let str = string n
+        let bin = toBinary n
+        str = new string(str |> Seq.toArray |> Array.rev) && bin = List.rev bin
+
+    seq { 1 .. 2 .. 999999 }
+    |> Seq.filter isPalindrome
+    |> Seq.sum

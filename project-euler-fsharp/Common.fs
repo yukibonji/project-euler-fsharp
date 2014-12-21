@@ -46,3 +46,11 @@ type Memoizer<'T, 'U when 'T: equality>() =
 
     member this.Store key value =
         cache.Add(key, value)
+
+let inline toBinary n =
+    let rec tailToBinary n binary =
+        match n &&& LanguagePrimitives.GenericOne with
+        | _ when n = LanguagePrimitives.GenericZero -> binary
+        | r -> tailToBinary (n >>> 1) (r :: binary)
+
+    tailToBinary n []

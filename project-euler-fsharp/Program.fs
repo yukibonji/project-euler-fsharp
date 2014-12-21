@@ -15,7 +15,7 @@ let time f =
 
 [<EntryPoint>]
 let main argv = 
-    let i, j = time Problems31to40.problem35
+    let i, j = time Problems31to40.problem36
     printfn "%A, %.3fms" i j
     Console.ReadKey(true) |> ignore
     0
